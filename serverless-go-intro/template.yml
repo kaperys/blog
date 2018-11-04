@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: Emoji Service
+Resources:
+  MobileProxy:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: go1.x
+      Handler: handler
+      Environment:
+        Variables:
+          SOURCE_URL:
+      Events:
+        RootHandler:
+          Type: Api
+          Properties:
+            Path: '/'
+            Method: get
