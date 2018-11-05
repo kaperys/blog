@@ -86,14 +86,14 @@ func getEmojis(qs map[string]string) ([]string, error) {
 	return result, nil
 }
 
-// getData retrieves the emoji data from the url and unmarshals it into a slice of EmojiData.
+// getData retrieves the emoji data from the url and attempts to unmarshal it into a slice of EmojiData.
 func getData(url string) ([]EmojiEntry, error) {
-	client := http.Client{Timeout: time.Second * 2}
-
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not create the request")
 	}
+
+	client := http.Client{Timeout: time.Second * 2}
 
 	res, err := client.Do(req)
 	if err != nil {

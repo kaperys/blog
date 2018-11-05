@@ -14,8 +14,7 @@ import (
 const mockServerURL = "127.0.0.1:9294"
 
 func TestHandlerSuccess(t *testing.T) {
-	s := setup(t, "[ { \"emoji\": \"👌\", \"aliases\": [\"dummy-emoji\"] } ]")
-	defer teardown(s)
+	defer teardown(setup(t, "[ { \"emoji\": \"👌\", \"aliases\": [\"dummy-emoji\"] } ]"))
 
 	res, _ := handler(events.APIGatewayProxyRequest{QueryStringParameters: map[string]string{searchKey: "dummy-emoji"}})
 
@@ -25,8 +24,7 @@ func TestHandlerSuccess(t *testing.T) {
 }
 
 func TestHandlerFailEmojiDoesNotExist(t *testing.T) {
-	s := setup(t, "[ { \"emoji\": \"👌\", \"aliases\": [\"dummy-emoji\"] } ]")
-	defer teardown(s)
+	defer teardown(setup(t, "[ { \"emoji\": \"👌\", \"aliases\": [\"dummy-emoji\"] } ]"))
 
 	res, _ := handler(events.APIGatewayProxyRequest{QueryStringParameters: map[string]string{searchKey: "emoji-that-does-not-exist"}})
 	if res.StatusCode == http.StatusOK {

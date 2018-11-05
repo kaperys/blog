@@ -3,17 +3,21 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Emoji Service
 Resources:
-  MobileProxy:
+  SearchEmojis:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: go1.x
       Handler: handler
       Environment:
         Variables:
-          SOURCE_URL:
+          SOURCE_URL: https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json
       Events:
         RootHandler:
           Type: Api
           Properties:
             Path: '/'
             Method: get
+
+Outputs:
+  Endpoint:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
