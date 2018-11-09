@@ -18,6 +18,9 @@ validate:
 api: build
 	sam local start-api
 
+invoke: build
+	sam local invoke "handler" -e invoke.json
+
 package: build
 	sam package --template-file template.yml --s3-bucket $(S3_BUCKET) --output-template-file package.yml
 
