@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vision App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <style>
+            body { background-color: black; font-family: 'Roboto', sans-serif; }
+            #vision { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+            #video { border: 1px solid grey; }
+            #results { color: white; list-style-type: none; padding: 0; }
+            #results li { display: inline; }
+        </style>
+    </head>
+    <body>
+        <div id="vision">
+            <div id="video"></div>
+            <ul id="results"></ul>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+        <script>
+            Webcam.set({
+                width: 1280,
+                height: 720,
+                image_format: 'png',
+                jpeg_quality: 100
+            });
+            
+            Webcam.attach('#video');
+
+            setInterval(function() {
+                Webcam.snap(function(data) {
+                    fetch('analyse', {
+                        method: 'post',
+                        body: JSON.stringify({Image: data.substring(22)})
+                    })
+                    .then(function(response) {
+                        if (response.status >= 200 && response.status < 300) {
+                            return Promise.resolve(response);
+                        } else {
+                            return Promise.reject(new Error(response.statusText));
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(function(response) {
+                        var ul = document.getElementById("results");
+                        ul.innerHTML = "";
+
+                        return response.map(function(label) {
+                            let li = document.createElement("li");
+                            li.appendChild(document.createTextNode(label.label + " (%" + label.confidence + ") "));
+                            ul.appendChild(li);
+                        })
+                    })
+                })
+            }, 3000); // 3 seconds
+        </script>
+    </body>
+</html>
+
