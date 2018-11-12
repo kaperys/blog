@@ -1,4 +1,4 @@
-# Blog Posts
+# Blog Posts [![Go Report Card](https://goreportcard.com/badge/github.com/kaperys/blog)](https://goreportcard.com/report/github.com/kaperys/blog)
 
 This repository contains the code accompanying my blog posts on Medium.
 

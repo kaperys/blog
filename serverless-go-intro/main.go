@@ -47,7 +47,7 @@ func handler(event events.APIGatewayProxyRequest) (events.APIGatewayProxyRespons
 	}, nil
 }
 
-// getEmojis searches availabe emoji tags and aliases for the given search term.
+// getEmojis searches available emoji tags and aliases for the given search term.
 func getEmojis(qs map[string]string) ([]string, error) {
 	search, ok := qs[searchKey]
 	if !ok {
