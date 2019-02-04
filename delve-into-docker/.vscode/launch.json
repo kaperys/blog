@@ -1,0 +1,16 @@
+{
+      "version": "0.2.0",
+      "configurations": [
+            {
+                  "name": "Delve into Docker",
+                  "type": "go",
+                  "request": "launch",
+                  "mode": "remote",
+                  "remotePath": "/go/src/gitlab.com/kaperys/delve-into-docker-app",
+                  "port": 40000,
+                  "host": "172.17.0.2",
+                  "program": "${workspaceRoot}",
+                  "showLog": true
+            }
+      ]
+}
